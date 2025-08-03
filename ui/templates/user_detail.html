@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 500px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 32px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 24px;
+        }
+        p {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+        a.button, button {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-right: 8px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+        a.button:hover, button:hover {
+            background: #0056b3;
+        }
+        .success {
+            color: #155724;
+            background: #d4edda;
+            border-radius: 4px;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+        .danger {
+            color: #721c24;
+            background: #f8d7da;
+            border-radius: 4px;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Detail</h1>
+        {% if user %}
+            <p><strong>Name:</strong> {{ user.name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <a href="{{ url_for('edit_user', user_id=user.id) }}" class="button">Edit</a>
+            <form action="{{ url_for('delete_user', user_id=user.id) }}" method="post" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+        {% else %}
+            <p>User not found.</p>
+        {% endif %}
+        <a href="{{ url_for('index') }}" class="button">Back</a>
+    </div>
+</body>
+</html>

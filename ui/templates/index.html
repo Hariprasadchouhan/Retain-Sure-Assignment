@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Management UI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 32px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 24px;
+        }
+        a.button, button {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-right: 8px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+        a.button:hover, button:hover {
+            background: #0056b3;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #f1f1f1;
+            margin-bottom: 10px;
+            padding: 12px 16px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .user-info {
+            flex: 1;
+        }
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+        .success {
+            color: #155724;
+            background: #d4edda;
+            border-radius: 4px;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+        .danger {
+            color: #721c24;
+            background: #f8d7da;
+            border-radius: 4px;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User List</h1>
+        <a href="{{ url_for('create_user') }}" class="button">Create New User</a>
+        <ul>
+            {% for user in users %}
+            <li>
+                <span class="user-info">{{ user.name }} ({{ user.email }})</span>
+                <span class="actions">
+                    <a href="{{ url_for('user_detail', user_id=user.id) }}" class="button">View</a>
+                    <a href="{{ url_for('edit_user', user_id=user.id) }}" class="button">Edit</a>
+                    <form action="{{ url_for('delete_user', user_id=user.id) }}" method="post" style="display:inline;">
+                        <button type="submit">Delete</button>
+                    </form>
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <ul>
+            {% for category, message in messages %}
+              <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>
